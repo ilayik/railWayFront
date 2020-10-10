@@ -77,10 +77,10 @@
   <hr>
   <br>
   <br>
-  <train
-      v-for="(train, id) of TRAINS" :key="id" v-bind:train="train" v-bind:user="sessionUsers"
-
-  />
+  <train v-for="(train, id) of TRAINS" :key="id" v-bind:train="train"/>
+  <form v-if="TRAINS.length === 0">
+    <p>There is no suitable train</p>
+  </form>
 </v-container>
 </v-app>
 </div>

@@ -28,7 +28,7 @@
         all train
       </v-tab>
       <v-tab-item>
-
+        <newStation/>
       </v-tab-item>
       <v-tab-item>
         <newTrain />
@@ -48,11 +48,13 @@
 import allTrain from "@/components/adminComponents/allTrain";
 import allPassengerInTrain from "@/components/adminComponents/allPassengerInTrain";
 import newTrain from "@/components/adminComponents/newTrain";
+import newStation from "@/components/adminComponents/newStation";
 export default {
   components:{
     allTrain,
     allPassengerInTrain,
-    newTrain
+    newTrain,
+    newStation
   },
   data() {
     return {

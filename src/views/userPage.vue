@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-app>
     <v-container>
       <h2 align="center">Hello, passenger {{sessionUsers.username}} !</h2>
       <hr>
@@ -20,7 +20,7 @@
         <ScheduleStation />
       </v-tab-item>
     </v-tabs>
-  </div>
+  </v-app>
 </template>
 
 <script>

@@ -10,7 +10,7 @@
         <v-col cols="12" sm="3" md="3">
           <v-text-field v-model="trainNumber" label="Train number" :hint="numberMessage" required></v-text-field>
         </v-col>
-        <v-col cols="1" sm="3" md="3" >
+        <v-col cols="12" sm="3" md="3" >
           <v-text-field v-model="train.capacity" label="Train capacity" required ></v-text-field>
         </v-col>
         <v-col cols="12" >
@@ -44,7 +44,6 @@ data:() =>({
   },
 }),
   watch:{
-
     trainNumber(){
     this.check = true;
     this.allTrains.forEach(train => {
@@ -61,7 +60,7 @@ data:() =>({
             this.getAllTrains();
           }
         } else {
-          this.numberMessage = 'Please enter your login';
+          this.numberMessage = 'Please enter train number';
           this.freeNumberStatus = false;
         }
       }

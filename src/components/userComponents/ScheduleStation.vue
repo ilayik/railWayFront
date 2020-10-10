@@ -5,27 +5,24 @@
     <br>
     <v-container >
       <v-row justify="center">
-        <v-col class="d-flex" cols="12" sm="6">
+        <v-col class="d-flex" cols="3" sm="6">
           <v-select
               v-model="stationName"
               :items="allStationName"
               label="Stations"
               solo
               @click="getAllStationName"
-
           ></v-select>
         </v-col>
+        <v-col  cols="12" sm="9" v-if="fl">
+          <v-data-table
+              :headers="headers"
+              :items="scheduleStation1"
+              item-key="name"
+              class="elevation-1"
+          ></v-data-table>
+        </v-col>
       </v-row>
-
-      <form v-if="fl">
-        <v-data-table
-            :headers="headers"
-            :items="scheduleStation1"
-            item-key="name"
-            class="elevation-1"
-        ></v-data-table>
-      </form>
-
     </v-container >
   </v-app>
 </template>

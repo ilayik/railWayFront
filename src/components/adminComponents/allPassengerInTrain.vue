@@ -1,9 +1,11 @@
 <template>
 <div>
   <br>
-  <br>
   <v-container >
     <v-row justify="center">
+      <v-col cols="12" >
+        <p align="center"> Please enter the train number  </p>
+      </v-col>
       <v-col class="d-flex" cols="12" sm="6">
         <v-select
             v-model="trainNumber"

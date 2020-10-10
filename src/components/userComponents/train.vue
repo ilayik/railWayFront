@@ -1,6 +1,6 @@
 <template >
 <div>
-  <v-card outlined color="blue-grey lighten-5" >
+  <v-card outlined color="blue-grey lighten-5" v-if="train!=null">
     <v-container height="50px">
       <v-row justify="center">
         <br>
@@ -20,7 +20,6 @@
         <v-col cols="12" sm="2" v-else-if="ticketCheck == 2">
             <p> Вы уже купили данный билет </p>
         </v-col>
-
       </v-row>
     </v-container>
   </v-card>
