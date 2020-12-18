@@ -1,9 +1,8 @@
-
 <template>
   <v-app>
     <br>
     <br>
-    <v-container >
+    <v-container>
       <v-row justify="center">
         <v-col class="d-flex" cols="3" sm="6">
           <v-select
@@ -14,7 +13,7 @@
               @click="getAllStationName"
           ></v-select>
         </v-col>
-        <v-col  cols="12" sm="9" v-if="fl">
+        <v-col cols="12" sm="9" v-if="fl">
           <v-data-table
               :headers="headers"
               :items="scheduleStation1"
@@ -23,12 +22,13 @@
           ></v-data-table>
         </v-col>
       </v-row>
-    </v-container >
+    </v-container>
   </v-app>
 </template>
 
 <script>
 import moment from 'moment'
+
 export default {
 
   data: () => ({
@@ -48,8 +48,8 @@ export default {
     }
   }),
   watch: {
-    stationName(){
-      this.axios.get(this.url.getScheduleStation, {params: {stationName : this.stationName}})
+    stationName() {
+      this.axios.get(this.url.getScheduleStation, {params: {stationName: this.stationName}})
           .then(response => {
             this.scheduleStation = response.data;
             this.scheduleStation1 = [];
@@ -62,7 +62,7 @@ export default {
           });
 
     },
-    fl(){
+    fl() {
       this.headers[0].text = 'Train №';
       this.headers[0].value = 'trainNumber';
       this.headers[1].text = 'Date arrivel';
@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     getAllStationName() {
-      this.allStation.forEach(station =>{
+      this.allStation.forEach(station => {
         this.allStationName.push(station.name);
       })
     },

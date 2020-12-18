@@ -37,12 +37,12 @@ export default {
   components:{
     trainSearch,
     ScheduleStation
-
   },
   created() {
     this.axios.get(this.url.getLastUser)
         .then(response => {
           this.sessionUsers = response.data;
+          console.log(this.sessionUsers)
         });
   },
 

@@ -2,7 +2,7 @@
   <div>
     <br>
     <br>
-    <v-container >
+    <v-container>
       <v-row justify="center">
         <v-data-table
             :headers="headers"
@@ -18,14 +18,14 @@
 
 <script>
 export default {
-  data: () =>({
+  data: () => ({
     headers: [
       {text: 'Train №', value: 'number'},
       {text: 'Capacity', value: 'capacity'}
     ],
     allTrains: [],
-    url:{
-      alltrains:'http://localhost:8090/allTrain',
+    url: {
+      alltrains: 'http://localhost:8090/allTrain',
     },
   }),
   created() {

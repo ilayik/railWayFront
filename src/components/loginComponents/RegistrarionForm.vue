@@ -4,7 +4,7 @@
       <v-row justify="center">
         <v-dialog v-model="dialog" persistent max-width="600px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn v-bind="attrs" v-on="on" > Registration </v-btn>
+            <v-btn v-bind="attrs" v-on="on"> Registration</v-btn>
           </template>
           <v-card>
             <v-card-title>
@@ -12,10 +12,11 @@
             </v-card-title>
             <v-card-text>
               <v-container>
-                <v-row >
+                <v-row>
                   <br>
                   <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="firstName" label="Legal first name" hint="" autocomplete="off"></v-text-field>
+                    <v-text-field v-model="firstName" label="Legal first name" hint=""
+                                  autocomplete="off"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field v-model="lastName" label="Legal last name" autocomplete="off"></v-text-field>
@@ -42,14 +43,15 @@
                       <v-date-picker v-model="date" no-title @input="menu1 = false"></v-date-picker>
                     </v-menu>
                   </v-col>
-                  <v-col cols="12" >
-                    <v-text-field v-model="freeUserName" label="Login*" :hint="freeUserNameMessage" autocomplete="off"></v-text-field>
+                  <v-col cols="12">
+                    <v-text-field v-model="freeUserName" label="Login*" :hint="freeUserNameMessage"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="user.password" label="Password*" type="password" required autocomplete="off"></v-text-field>
+                    <v-text-field v-model="user.password" label="Password*" type="password" required></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="confirmPassword" label="Confirm Password*" type="password" required  :hint="confirmPasswordMessage" autocomplete="off"></v-text-field>
+                    <v-text-field v-model="confirmPassword" label="Confirm Password*" type="password" required
+                                  :hint="confirmPasswordMessage"></v-text-field>
                   </v-col>
                 </v-row>
               </v-container>
@@ -57,7 +59,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-              <form v-if="freeUserNameStatus&&confirmPasswordStatus" @submit.prevent = "saveUser">
+              <form v-if="freeUserNameStatus&&confirmPasswordStatus" @submit.prevent="saveUser">
                 <v-btn type="submit">Save</v-btn>
               </form>
             </v-card-actions>
@@ -73,50 +75,50 @@ export default {
   data: vm => ({
     check: true,
     menu1: false,
-    firstName:'',
-    lastName:'',
+    firstName: '',
+    lastName: '',
     date: new Date().toISOString().substr(0, 10),
     dateBirth: vm.formatDate(new Date().toISOString().substr(0, 10)),
     dialog: false,
-    freeUserName:'',
+    freeUserName: '',
     freeUserNameMessage: '',
     freeUserNameStatus: true,
-    confirmPassword:'',
+    confirmPassword: '',
     confirmPasswordStatus: false,
     confirmPasswordMessage: '',
-    user:{},
-    allUsers:[],
+    user: {},
+    allUsers: [],
     url: {
       allUser: 'http://localhost:8090/allUser',
       saveUser: 'http://localhost:8090/saveUser',
     },
   }),
-  watch:{
-    firstName(){
+  watch: {
+    firstName() {
       this.user.firstName = this.firstName
     },
-    lastName(){
+    lastName() {
       this.user.lastName = this.lastName
     },
-    dateBirth(){
+    dateBirth() {
       this.user.dateBirth = this.dateBirth
     },
-    date () {
+    date() {
       this.dateBirth = this.formatDate(this.date)
     },
-    dialog(){
-        this.freeUserName = '';
-        this.freeUserNameMessage = '';
-        this.freeUserNameStatus = true;
-        this.confirmPassword = '';
-        this.confirmPasswordStatus = false;
-        this.confirmPasswordMessage= '';
-        this.user = {}
-        this.user.password = '';
-        this.firstName = '';
-        this.lastName = '';
+    dialog() {
+      this.freeUserName = '';
+      this.freeUserNameMessage = '';
+      this.freeUserNameStatus = true;
+      this.confirmPassword = '';
+      this.confirmPasswordStatus = false;
+      this.confirmPasswordMessage = '';
+      this.user = {}
+      this.user.password = '';
+      this.firstName = '';
+      this.lastName = '';
     },
-    freeUserName : function(){
+    freeUserName: function () {
       this.check = true;
       this.allUsers.forEach(user => {
         if (this.check) {
@@ -137,19 +139,19 @@ export default {
         }
       })
     },
-    confirmPassword: function(){
-      if ((this.confirmPassword !== this.user.password)||(this.freeUserName === '')){
+    confirmPassword: function () {
+      if ((this.confirmPassword !== this.user.password) || (this.freeUserName === '')) {
         this.confirmPasswordMessage = "Passwords don't match";
         this.confirmPasswordStatus = false;
-      }else {
+      } else {
         this.confirmPasswordMessage = "";
         this.confirmPasswordStatus = true;
       }
     },
   },
-  created() {
-    this.getAllUser();
-  },
+  // created() {
+  //   this.getAllUser();
+  // },
   methods: {
     formatDate(date) {
       if (!date) return null
@@ -170,5 +172,5 @@ export default {
           })
     }
   }
-  }
+}
 </script>

@@ -88,6 +88,7 @@
 
 <script>
 import train from "@/components/userComponents/train"
+
 export default {
   components:{
     train
@@ -117,6 +118,7 @@ export default {
     this.axios.get(this.url.getLastUser)
         .then(response => {
           this.sessionUsers = response.data;
+          console.log('user session - ', this.sessionUsers)
             });
   },
   watch: {
@@ -145,7 +147,7 @@ export default {
       this.axios.post(this.url.findTrainPost,[this.stationA, this.stationB, this.dateAFormatted, this.dateBFormatted] )
           .then(response => {
             this.TRAINS = response.data;
-            console.log('Найденный поезда', this.TRAINS);
+            console.log('Найденные поезда', this.TRAINS);
           });
 
     },
