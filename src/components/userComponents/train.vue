@@ -36,10 +36,10 @@ export default {
       train: {},
     },
     url: {
-      addTicket: 'http://localhost:8090/addTicket',
-      updateTrain: 'http://localhost:8090/updateTrain',
-      ticketUserCheck: 'http://localhost:8090/ticketUserCheck',
-      getLastUser: 'http://localhost:8090/getLastUser'
+      addTicket: 'http://localhost:8090/api/v1/tickets',
+      updateTrain: 'http://localhost:8090/api/v1/trains/update',
+      ticketUserCheck: 'http://localhost:8090/api/v1/tickets/user-check',
+      getLastUser: 'http://localhost:8090/api/v1/users/get-last'
     }
   }),
   props: {

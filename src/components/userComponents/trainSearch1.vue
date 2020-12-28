@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import train from "@/components/userComponents/train"
+import train from "./train";
 
 export default {
   components:{
@@ -107,9 +107,9 @@ export default {
     menu1: false,
     menu2: false,
     url: {
-      findTrainPost: 'http://localhost:8090/findTrainPost',
-      allstation: 'http://localhost:8090/allStation',
-      getLastUser: 'http://localhost:8090/getLastUser'
+      findTrainPost: 'http://localhost:8090/api/v1/trains/find',
+      allstation: 'http://localhost:8090/api/v1/stations',
+      getLastUser: 'http://localhost:8090/api/v1/users/get-last'
     }
   }),
   created() {

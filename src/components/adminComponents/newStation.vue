@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import newSchedules from "@/components/adminComponents/newScheduls";
+import newSchedules from "./newSchedules";
 
 export default {
   components: {
@@ -40,8 +40,8 @@ export default {
     freeNameStatus: false,
     AllStation: [],
     url: {
-      allStation: 'http://localhost:8090/allStation',
-      saveStation: 'http://localhost:8090/addStation',
+      allStation: 'http://localhost:8090/api/v1/stations',
+      saveStation: 'http://localhost:8090/api/v1/stations',
     }
   }),
   created() {

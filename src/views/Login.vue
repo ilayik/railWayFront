@@ -33,10 +33,9 @@
   </div>
 </template>
 <script>
-  import RegistrationForm from '@/components/loginComponents/RegistrarionForm';
-  // import axios from "axios";
-  // import cookie from 'cookielib';
+  import RegistrationForm from '../components/loginComponents/RegistrarionForm';
   import Cookies from 'js-cookie'
+  import router from "../router";
 
   export default {
   name: "LoginApp",
@@ -45,8 +44,8 @@
     AuthenticationRequestDTO: {},
     allUsers: [],
     url: {
-      allUser: 'http://localhost:8090/allUser',
-      saveLastUser: 'http://localhost:8090/saveLastUser',
+      allUser: 'http://localhost:8090/api/v1/users',
+      saveLastUser: 'http://localhost:8090/api/v1/users/save-last',
       login: 'http://localhost:8090/api/v1/auth/login',
       users: 'http://localhost:8090/api/v1/users',
     },
@@ -58,19 +57,17 @@
 
   },
   methods: {
-
     loginUser() {
       this.axios.post(this.url.login, this.AuthenticationRequestDTO)
           .then(response => {
                 if (response.status === 200) {
                   Cookies.set('Token', response.data.token);
                   console.log('Токен выдан и записан в headers ', Cookies.get('Token'))
-                  this.axios.get(this.url.users)
-                        .then(response =>  console.log(response.data));
-                  // if (response.data.login === 'admin') {
-                  //   window.location.assign("http://localhost:8090/api/v1/developers");
-                  // } else
-                  //   window.location.assign("http://localhost:8090/api/v1/developers");
+                  console.log(response.data.role);
+                  if(response.data.role === 'ADMIN')
+                    router.push('/admin-page');
+                  if(response.data.role === 'USER')
+                    router.push('/user-page');
                 } else {
                   this.qwe = 'There is no such user';
                 }

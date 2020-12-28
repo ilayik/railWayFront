@@ -45,8 +45,8 @@ export default {
     trainNumber: '',
     UsersByTrainNumber: [],
     url: {
-      alltrain: 'http://localhost:8090/allTrain',
-      getUsersByTrainNumber: 'http://localhost:8090/getUsersByTrainNumber',
+      alltrain: 'http://localhost:8090/api/v1/trains',
+      getUsersByTrainNumber: 'http://localhost:8090/api/v1/users/on-train',
     }
   }),
   watch: {

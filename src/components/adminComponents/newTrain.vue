@@ -39,8 +39,8 @@ export default {
       capacity: '',
     },
     url: {
-      allTrain: 'http://localhost:8090/allTrain',
-      saveTrain: 'http://localhost:8090/addTrain'
+      allTrain: 'http://localhost:8090/api/v1/trains',
+      saveTrain: 'http://localhost:8090/api/v1/trains'
     },
   }),
   watch: {

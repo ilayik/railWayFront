@@ -24,14 +24,14 @@
 </template>
 
 <script>
-import trainSearch from '@/components/userComponents/trainSearch1'
-import ScheduleStation from "@/components/userComponents/ScheduleStation";
+import trainSearch from '../components/userComponents/trainSearch1'
+import ScheduleStation from "../components/userComponents/ScheduleStation";
 
 export default {
   data: () => ({
     sessionUsers: {},
     url: {
-      getLastUser: 'http://localhost:8090/getLastUser'
+      getLastUser: 'http://localhost:8090/api/v1/users/get-last'
     }
   }),
   components:{

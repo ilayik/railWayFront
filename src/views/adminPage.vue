@@ -45,10 +45,11 @@
 </template>
 
 <script>
-import allTrain from "@/components/adminComponents/allTrain";
-import allPassengerInTrain from "@/components/adminComponents/allPassengerInTrain";
-import newTrain from "@/components/adminComponents/newTrain";
-import newStation from "@/components/adminComponents/newStation";
+import allTrain from "../components/adminComponents/allTrain";
+import allPassengerInTrain from "../components/adminComponents/allPassengerInTrain";
+import newTrain from "../components/adminComponents/newTrain";
+import newStation from "../components/adminComponents/newStation";
+
 export default {
   components:{
     allTrain,
@@ -64,8 +65,8 @@ export default {
       allStation: [],
       url: {
         getLastUser: 'http://localhost:8090/getLastUser',
-        allstation: 'http://localhost:8090/allStation',
-        addstation: 'http://localhost:8090/addStation'
+        allstation: 'http://localhost:8090/api/v1/stations',
+        addstation: 'http://localhost:8090/api/v1/stations'
       }
     }
   },

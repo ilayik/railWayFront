@@ -160,7 +160,7 @@ export default {
     },
     AllStation: [],
     url: {
-      allStation: 'http://localhost:8090/allStation',
+      allStation: 'http://localhost:8090/api/v1/stations',
     }
   }),
   computed: {

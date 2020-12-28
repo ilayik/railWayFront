@@ -25,7 +25,7 @@ export default {
     ],
     allTrains: [],
     url: {
-      alltrains: 'http://localhost:8090/allTrain',
+      alltrains: 'http://localhost:8090/api/v1/trains',
     },
   }),
   created() {

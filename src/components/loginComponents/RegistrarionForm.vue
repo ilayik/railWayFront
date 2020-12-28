@@ -89,8 +89,8 @@ export default {
     user: {},
     allUsers: [],
     url: {
-      allUser: 'http://localhost:8090/allUser',
-      saveUser: 'http://localhost:8090/saveUser',
+      allUser: 'http://localhost:8090/api/v1/users',
+      saveUser: 'http://localhost:8090/api/v1/users',
     },
   }),
   watch: {

@@ -43,8 +43,8 @@ export default {
     scheduleStation: [],
     scheduleStation1: [],
     url: {
-      allstation: 'http://localhost:8090/allStation',
-      getScheduleStation: 'http://localhost:8090/SchedulesByStation',
+      allstation: 'http://localhost:8090/api/v1/stations',
+      getScheduleStation: 'http://localhost:8090/api/v1/schedules/by-station',
     }
   }),
   watch: {

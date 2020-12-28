@@ -16,20 +16,22 @@ axios.interceptors.request.use(function (config) {
   return config;
 });
 
+axios.interceptors.response.use(null, error => {
+  let path = '/error';
+  console.log(error.response.status)
+  switch (error.response.status) {
+    case 403:
+
+      path = '/';
+    break;
+  }
+  router.push(path);
+  return Promise.reject(error);
+});
+
 
 new Vue({
   router,
   vuetify,
   render: h => h(App),
-  // watch: {
-  //   '$route': function() {
-  //   // '$route': function(from, to) {
-  //   //   axios.defaults.headers.common['Authorization'] = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTYwODA1MjYxMCwiZXhwIjoxNjA4NjU3NDkwfQ._zra_u4YjP6oBXrgk4MpTHzVvtVMaj7MUyv8wGGwSWQ';
-  //     axios.defaults.headers.common['Authorization'] = Cookie.getCookie('Token');
-  //   }
-  // },
-  // created () {
-  //   // axios.defaults.headers.common['Authorization'] = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTYwODA1MjYxMCwiZXhwIjoxNjA4NjU3NDkwfQ._zra_u4YjP6oBXrgk4MpTHzVvtVMaj7MUyv8wGGwSWQ';
-  //   axios.defaults.headers.common['Authorization'] = Cookie.getCookie('Token');
-  // }
 }).$mount('#app')
