@@ -4,26 +4,32 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import vuetify from './plugins/vuetify'
 import router from './router'
-import Cookie from "cookielib";
-// import cookies from 'js-cookie'
+import Cookies from 'js-cookie'
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
+
+axios.interceptors.request.use(function (config) {
+
+  config.headers.Authorization =  Cookies.get('Token');
+
+  return config;
+});
 
 
 new Vue({
   router,
   vuetify,
   render: h => h(App),
-  watch: {
-    '$route': function() {
-    // '$route': function(from, to) {
-    //   axios.defaults.headers.common['Authorization'] = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTYwODA1MjYxMCwiZXhwIjoxNjA4NjU3NDkwfQ._zra_u4YjP6oBXrgk4MpTHzVvtVMaj7MUyv8wGGwSWQ';
-      axios.defaults.headers.common['Authorization'] = Cookie.getCookie('Token');
-    }
-  },
-  created () {
-    // axios.defaults.headers.common['Authorization'] = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTYwODA1MjYxMCwiZXhwIjoxNjA4NjU3NDkwfQ._zra_u4YjP6oBXrgk4MpTHzVvtVMaj7MUyv8wGGwSWQ';
-    axios.defaults.headers.common['Authorization'] = Cookie.getCookie('Token');
-  }
+  // watch: {
+  //   '$route': function() {
+  //   // '$route': function(from, to) {
+  //   //   axios.defaults.headers.common['Authorization'] = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTYwODA1MjYxMCwiZXhwIjoxNjA4NjU3NDkwfQ._zra_u4YjP6oBXrgk4MpTHzVvtVMaj7MUyv8wGGwSWQ';
+  //     axios.defaults.headers.common['Authorization'] = Cookie.getCookie('Token');
+  //   }
+  // },
+  // created () {
+  //   // axios.defaults.headers.common['Authorization'] = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTYwODA1MjYxMCwiZXhwIjoxNjA4NjU3NDkwfQ._zra_u4YjP6oBXrgk4MpTHzVvtVMaj7MUyv8wGGwSWQ';
+  //   axios.defaults.headers.common['Authorization'] = Cookie.getCookie('Token');
+  // }
 }).$mount('#app')

@@ -33,12 +33,12 @@
   </div>
 </template>
 <script>
-import RegistrationForm from '@/components/loginComponents/RegistrarionForm';
-// import axios from "axios";
-// import cookie from 'cookielib';
-import Cookie from "cookielib";
+  import RegistrationForm from '@/components/loginComponents/RegistrarionForm';
+  // import axios from "axios";
+  // import cookie from 'cookielib';
+  import Cookies from 'js-cookie'
 
-export default {
+  export default {
   name: "LoginApp",
   data: () => ({
     qwe: '',
@@ -48,6 +48,7 @@ export default {
       allUser: 'http://localhost:8090/allUser',
       saveLastUser: 'http://localhost:8090/saveLastUser',
       login: 'http://localhost:8090/api/v1/auth/login',
+      users: 'http://localhost:8090/api/v1/users',
     },
     show1: false,
     show2: false,
@@ -56,34 +57,16 @@ export default {
     RegistrationForm,
 
   },
-  // created() {
-  //   this.axios.get(this.url.allUser)
-  //       .then(response => this.allUsers = response.data);
-  // },
   methods: {
-    // loginUser(){
-    //   this.allUsers.forEach(user => {
-    //     if((this.user.username === user.username)&&(this.user.password === user.password)){
-    //       this.axios.post(this.url.saveLastUser, user)
-    //           .then(response =>
-    //             console.log(response.data)
-    //           );
-    //       user.roles.forEach(role => {
-    //         console.log(role.name);
-    //         if(role.name === 'ROLE_ADMIN'){
-    //           window.location.assign("http://localhost:8080/admin-page");
-    //         }else if (role.name === 'ROLE_USER')
-    //           window.location.assign("http://localhost:8080/user-page");
-    //       })
-    //     }else{this.qwe = 'There is no such user';}})
-    // },
+
     loginUser() {
       this.axios.post(this.url.login, this.AuthenticationRequestDTO)
           .then(response => {
                 if (response.status === 200) {
-                  Cookie.setCookie('Token', response.data.token);
-                  // axios.defaults.headers.common['Authorization'] = 'aasdasdasdasdasdsdddddddddddddddddddddddddddd';
-                  console.log('Токен выдан и записан в headers ', Cookie.setCookie('Token'))
+                  Cookies.set('Token', response.data.token);
+                  console.log('Токен выдан и записан в headers ', Cookies.get('Token'))
+                  this.axios.get(this.url.users)
+                        .then(response =>  console.log(response.data));
                   // if (response.data.login === 'admin') {
                   //   window.location.assign("http://localhost:8090/api/v1/developers");
                   // } else
@@ -95,15 +78,6 @@ export default {
               }
           )
     },
-    //     user.roles.forEach(role => {
-    //       console.log(role.name);
-    //       if (role.name === 'ROLE_ADMIN') {
-    //         window.location.assign("http://localhost:8080/admin-page");
-    //       } else if (role.name === 'ROLE_USER')
-    //         window.location.assign("http://localhost:8080/user-page");
-    //     })
-    //   }else{this.qwe = 'There is no such user';}
-    // }
   }
 }
 </script>
