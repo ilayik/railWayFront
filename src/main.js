@@ -10,9 +10,9 @@ Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
 
 axios.interceptors.request.use(function (config) {
-
-  config.headers.Authorization =  Cookies.get('Token');
-
+  if (Cookies.get('Token') !== undefined){
+    config.headers.Authorization =  Cookies.get('Token');
+  }
   return config;
 });
 
@@ -20,10 +20,7 @@ axios.interceptors.response.use(null, error => {
   let path = '/error';
   console.log(error.response.status)
   switch (error.response.status) {
-    case 403:
-
-      path = '/';
-    break;
+    case 403:path = '/';break;
   }
   router.push(path);
   return Promise.reject(error);

@@ -94,7 +94,7 @@ export default {
     train
   },
   data: vm => ({
-    sessionUsers: {},
+    // sessionUsers: {},
     TRAINS:[],
     allStation: {},
     allStationName: [],
@@ -115,11 +115,11 @@ export default {
   created() {
     this.axios.get(this.url.allstation)
         .then(response => this.allStation = response.data);
-    this.axios.get(this.url.getLastUser)
-        .then(response => {
-          this.sessionUsers = response.data;
-          console.log('user session - ', this.sessionUsers)
-            });
+    // this.axios.get(this.url.getLastUser)
+    //     .then(response => {
+    //       this.sessionUsers = response.data;
+    //       console.log('user session - ', this.sessionUsers)
+    //         });
   },
   watch: {
     dateA () {

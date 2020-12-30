@@ -27,19 +27,20 @@
   </div>
 </template>
 <script>
+  import Cookies from 'js-cookie';
 export default {
   data: () => ({
     ticketCheck: 0,
     fl: 1,
     ticket: {
-      user: {},
+      userLogin: '',
       train: {},
     },
     url: {
       addTicket: 'http://localhost:8090/api/v1/tickets',
       updateTrain: 'http://localhost:8090/api/v1/trains/update',
       ticketUserCheck: 'http://localhost:8090/api/v1/tickets/user-check',
-      getLastUser: 'http://localhost:8090/api/v1/users/get-last'
+      // getLastUser: 'http://localhost:8090/api/v1/users/get-last'
     }
   }),
   props: {
@@ -51,15 +52,16 @@ export default {
   },
   watch: {
     fl() {
-      this.axios.get(this.url.getLastUser)
-          .then(response => {
-            this.ticket.user = response.data;
+      // this.axios.get(this.url.getLastUser)
+      //     .then(response => {
+            this.ticket.userLogin = Cookies.get('Login');
             this.ticket.train = this.train;
+            console.log( this.ticket);
             this.axios.post(this.url.ticketUserCheck, this.ticket)
                 .then(response => {
                   this.ticketCheck = response.data;
                 });
-          });
+          // });
 
     },
   },
@@ -69,6 +71,7 @@ export default {
   methods: {
     buyTicket() {
       this.train.capacity--;
+      console.log(this.train);
       this.axios.post(this.url.updateTrain, this.train)
           .then(response => {
             response.data = null;

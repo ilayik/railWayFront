@@ -64,13 +64,18 @@ export default {
       schedules:{},
       allStation: [],
       url: {
-        getLastUser: 'http://localhost:8090/getLastUser',
+        getLastUser: 'http://localhost:8090/api/v1/users/get-last',
         allstation: 'http://localhost:8090/api/v1/stations',
-        addstation: 'http://localhost:8090/api/v1/stations'
+        addstation: 'http://localhost:8090/api/v1/stations',
+        checkAuthority: 'http://localhost:8090/api/v1/users/check-authority',
       }
     }
   },
   created() {
+    this.axios.get(this.url.checkAuthority);
+            // .then(response => {
+            //   console.log(response);
+            // });
     this.axios.get(this.url.getLastUser)
         .then(response => {
           this.sessionUsers = response.data;

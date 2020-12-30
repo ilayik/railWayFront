@@ -35,7 +35,7 @@ export default {
 
   data: () => ({
     headers: [
-      {text: 'username', value: 'username'},
+      {text: 'login', value: 'login'},
       {text: 'firstName', value: 'firstName'},
       {text: 'lastName', value: 'lastName'},
     ],

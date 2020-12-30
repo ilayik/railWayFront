@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-container>
-      <h2 align="center">Hello, passenger {{sessionUsers.username}} !</h2>
+      <h2 align="center">Hello, passenger {{nameUser}} !</h2>
       <hr>
       <br>
 
@@ -26,12 +26,15 @@
 <script>
 import trainSearch from '../components/userComponents/trainSearch1'
 import ScheduleStation from "../components/userComponents/ScheduleStation";
+import Cookies from 'js-cookie';
 
 export default {
   data: () => ({
     sessionUsers: {},
+    nameUser: '',
     url: {
-      getLastUser: 'http://localhost:8090/api/v1/users/get-last'
+      getLastUser: 'http://localhost:8090/api/v1/users/get-last',
+      getNameUser: 'http://localhost:8090/api/v1/users/get-name',
     }
   }),
   components:{
@@ -39,10 +42,10 @@ export default {
     ScheduleStation
   },
   created() {
-    this.axios.get(this.url.getLastUser)
+    this.axios.get(this.url.getNameUser, {params: { login : Cookies.get('Login') }})
         .then(response => {
-          this.sessionUsers = response.data;
-          console.log(this.sessionUsers)
+          this.nameUser = response.data;
+          console.log(this.nameUser)
         });
   },
 
