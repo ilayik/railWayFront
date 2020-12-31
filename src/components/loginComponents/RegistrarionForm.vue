@@ -27,7 +27,7 @@
                                         <div style="color:red">{{this.eLastName}}</div>
                                     </v-col>
 
-                                    <v-col class="d-flex" cols="12" sm="6" md="6">
+                                    <v-col class="d-flex" cols="12" sm="6" >
                                         <v-menu
                                                 v-model="menu1"
                                                 :close-on-content-click="false"
@@ -48,8 +48,9 @@
                                             <v-date-picker v-model="date" no-title
                                                            @input="menu1 = false"></v-date-picker>
                                         </v-menu>
-                                        <!--                    <div style="color:red">{{this.eFirstName}}</div>-->
+                                        <div style="color:red">{{this.eDateBirth}}</div>
                                     </v-col>
+
 
                                     <v-col cols="12" sm="6" md="6">
                                         <v-text-field v-model="email" label="Email"></v-text-field>
@@ -62,8 +63,11 @@
                                     </v-col>
 
                                     <v-col cols="12" sm="6" md="6">
-                                        <v-text-field v-model="password" label="Password*" type="password"
-                                                      required></v-text-field>
+                                        <v-text-field v-model="password"
+                                                      label="Password*"
+                                                      type="password"
+                                                      required>
+                                        </v-text-field>
                                         <div style="color:red">{{this.ePassword}}</div>
                                     </v-col>
 
@@ -71,9 +75,9 @@
                                         <v-text-field v-model="confirmPassword"
                                                       label="Confirm Password*"
                                                       type="password"
-                                                      required
-                                                      :hint="confirmPasswordMessage">
+                                                      required>
                                         </v-text-field>
+                                        <div style="color:red">{{this.eConfirmPassword}}</div>
                                     </v-col>
 
                                 </v-row>
@@ -100,18 +104,16 @@
             check: true,
             menu1: false,
             dialog: false,
-            confirmPasswordStatus: false,
 
             firstName: '',
             lastName: '',
             email: '',
             dateBirth: vm.formatDate(new Date().toISOString().substr(0, 10)),
             date: new Date().toISOString().substr(0, 10),
+
             login: '',
             password: '',
             confirmPassword: '',
-
-            confirmPasswordMessage: '',
 
             userDTO: {},
 
@@ -129,20 +131,39 @@
             },
         }),
         watch: {
-
             dialog() {
+                console.log(this.date);
+                console.log(this.dateBirth);
                 this.login = '';
                 this.confirmPassword = '';
-                this.confirmPasswordStatus = false;
-                this.confirmPasswordMessage = '';
                 this.userDTO = {}
                 this.password = '';
                 this.firstName = '';
                 this.lastName = '';
                 this.email = '';
             },
+
         },
         methods: {
+            validDateBirth(){
+                var a = new Date()
+                var b = new Date(this.date)
+                var diff = Math.abs(a - b )
+                var days = parseInt(diff/1000/60/60/24);
+                if(a < b){
+                    this.check = false;
+                    return "You haven't been born yet"
+                }else if(days < 7){
+                    this.check = false;
+                    return 'You must be over 7 days old'
+                }
+            },
+            validConfirmPassword() {
+                if ((this.confirmPassword !== this.password) || (this.confirmPassword === '')) {
+                    this.check = false;
+                    return "Passwords don't match";
+                }
+            },
             clear() {
                 this.eFirstName = '';
                 this.eLastName = '';
@@ -151,12 +172,14 @@
                 this.eLogin = '';
                 this.ePassword = '';
                 this.eConfirmPassword = '';
-            },
+            }
+            ,
             formatDate(date) {
                 if (!date) return null
                 const [year, month, day] = date.split('-')
                 return `${year}-${month}-${day}`
-            },
+            }
+            ,
             validFirstName() {
                 if (!this.firstName) {
                     this.check = false;
@@ -172,7 +195,8 @@
                     return 'First name must be more than 2 characters'
                 }
                 return '';
-            },
+            }
+            ,
             validLastName() {
                 if (!this.lastName) {
                     this.check = false;
@@ -186,18 +210,20 @@
                     this.check = false;
                     return 'Last name must be more than 2 characters'
                 }
-            },
+            }
+            ,
             validEmail() {
                 if (!this.email) {
                     this.check = false;
                     return 'Please enter your email'
                 }
                 const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                if (re.test(this.email)) {
+                if (!re.test(this.email)) {
                     this.check = false;
                     return 'Please enter correct email';
                 }
-            },
+            }
+            ,
             validPassword() {
                 if (!this.password) {
                     this.check = false;
@@ -211,7 +237,8 @@
                     this.check = false;
                     return 'Password must be more than 3 characters'
                 }
-            },
+            }
+            ,
             validLogin() {
                 this.axios.get(this.url.validLogin, {params: {login: this.login}})
                     .then(response => {
@@ -222,21 +249,26 @@
                         this.eLogin = response.data;
                         return response.data;
                     })
-            },
+            }
+            ,
             validation() {
+                this.eConfirmPassword =this.validConfirmPassword();
                 this.eFirstName = this.validFirstName();
                 this.eLastName = this.validLastName();
                 this.eEmail = this.validEmail();
                 this.ePassword = this.validPassword();
                 this.eLogin = this.validLogin();
-            },
+                this.eDateBirth = this.validDateBirth();
+            }
+            ,
             buildUser() {
                 this.userDTO.login = this.login;
                 this.userDTO.password = this.password;
                 this.userDTO.email = this.email;
                 this.userDTO.lastName = this.lastName;
                 this.userDTO.firstName = this.firstName;
-            },
+            }
+            ,
             saveUser() {
                 this.clear();
                 this.validation();
