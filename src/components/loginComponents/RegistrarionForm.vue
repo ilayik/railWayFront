@@ -1,207 +1,256 @@
 <template>
-  <div>
-    <v-app id="inspire">
-      <v-row justify="center">
-        <v-dialog v-model="dialog" persistent max-width="600px">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn v-bind="attrs" v-on="on"> Registration</v-btn>
-          </template>
-          <v-card>
-            <v-card-title>
-              <span class="headline">User Profile</span>
-            </v-card-title>
-            <v-card-text>
-              <v-container>
-                <v-row>
+    <div>
+        <v-app id="inspire">
+            <v-row justify="center">
+                <v-dialog v-model="dialog" persistent max-width="600px">
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn v-bind="attrs" v-on="on"> Registration</v-btn>
+                    </template>
+                    <v-card>
+                        <v-card-title>
+                            <span class="headline">User Profile</span>
+                        </v-card-title>
+                        <v-card-text>
+                            <v-container>
+                                <v-row>
 
-                  <br>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="firstName" label="Legal first name" hint=""
-                                  autocomplete="off"></v-text-field>
-                  </v-col>
+                                    <br>
+                                    <v-col cols="12" sm="6" md="6">
+                                        <v-text-field v-model="firstName" label="Legal first name"
+                                                      autocomplete="off"></v-text-field>
+                                        <div style="color:red">{{this.eFirstName}}</div>
+                                    </v-col>
 
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="lastName" label="Legal last name" autocomplete="off"></v-text-field>
-                  </v-col>
+                                    <v-col cols="12" sm="6" md="6">
+                                        <v-text-field v-model="lastName" label="Legal last name"
+                                                      autocomplete="off"></v-text-field>
+                                        <div style="color:red">{{this.eLastName}}</div>
+                                    </v-col>
 
-                  <v-col class="d-flex" cols="12" sm="6" md="6">
-                    <v-menu
-                        v-model="menu1"
-                        :close-on-content-click="false"
-                        transition="scale-transition"
-                        offset-y
-                        max-width="290px"
-                        min-width="290px"
-                    >
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                            v-model="dateBirth"
-                            label="Date of birth"
-                            readonly
-                            v-bind="attrs"
-                            v-on="on"
-                        ></v-text-field>
-                      </template>
-                      <v-date-picker v-model="date" no-title @input="menu1 = false"></v-date-picker>
-                    </v-menu>
-                  </v-col>
+                                    <v-col class="d-flex" cols="12" sm="6" md="6">
+                                        <v-menu
+                                                v-model="menu1"
+                                                :close-on-content-click="false"
+                                                transition="scale-transition"
+                                                offset-y
+                                                max-width="290px"
+                                                min-width="290px"
+                                        >
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-text-field
+                                                        v-model="dateBirth"
+                                                        label="Date of birth"
+                                                        readonly
+                                                        v-bind="attrs"
+                                                        v-on="on"
+                                                ></v-text-field>
+                                            </template>
+                                            <v-date-picker v-model="date" no-title
+                                                           @input="menu1 = false"></v-date-picker>
+                                        </v-menu>
+                                        <!--                    <div style="color:red">{{this.eFirstName}}</div>-->
+                                    </v-col>
 
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="email" label="Email" :hint="email"></v-text-field>
-                  </v-col>
+                                    <v-col cols="12" sm="6" md="6">
+                                        <v-text-field v-model="email" label="Email"></v-text-field>
+                                        <div style="color:red">{{this.eEmail}}</div>
+                                    </v-col>
 
-                  <v-col cols="12">
-                    <v-text-field v-model="login" label="Login*" :hint="freeUserNameMessage"></v-text-field>
-                  </v-col>
+                                    <v-col cols="12">
+                                        <v-text-field v-model="login" label="Login*"></v-text-field>
+                                        <div style="color:red">{{this.eLogin}}</div>
+                                    </v-col>
 
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="password" label="Password*" type="password" required></v-text-field>
-                  </v-col>
+                                    <v-col cols="12" sm="6" md="6">
+                                        <v-text-field v-model="password" label="Password*" type="password"
+                                                      required></v-text-field>
+                                        <div style="color:red">{{this.ePassword}}</div>
+                                    </v-col>
 
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="confirmPassword"
-                                  label="Confirm Password*"
-                                  type="password"
-                                  required
-                                  :hint="confirmPasswordMessage">
-                    </v-text-field>
-                  </v-col>
+                                    <v-col cols="12" sm="6" md="6">
+                                        <v-text-field v-model="confirmPassword"
+                                                      label="Confirm Password*"
+                                                      type="password"
+                                                      required
+                                                      :hint="confirmPasswordMessage">
+                                        </v-text-field>
+                                    </v-col>
 
-                </v-row>
-              </v-container>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-<!--              <form v-if="freeUserNameStatus&&confirmPasswordStatus" @submit.prevent="saveUser">-->
-              <form @submit.prevent="saveUser">
-                <v-btn type="submit">Save</v-btn>
-              </form>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-row>
-    </v-app>
-  </div>
+                                </v-row>
+                            </v-container>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+                            <!--              <form v-if="freeUserNameStatus&&confirmPasswordStatus" @submit.prevent="saveUser">-->
+                            <form @submit.prevent="saveUser">
+                                <v-btn type="submit">Save</v-btn>
+                            </form>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </v-row>
+        </v-app>
+    </div>
 </template>
 
 <script>
-export default {
-  data: vm => ({
-    check: true,
-    menu1: false,
-    dialog: false,
-    freeUserNameStatus: true,
-    confirmPasswordStatus: false,
+    export default {
+        data: vm => ({
+            check: true,
+            menu1: false,
+            dialog: false,
+            confirmPasswordStatus: false,
 
-    firstName: '',
-    lastName: '',
-    email: '',
-    dateBirth: vm.formatDate(new Date().toISOString().substr(0, 10)),
-    date: new Date().toISOString().substr(0, 10),
-    login: '',
-    password: '',
-    confirmPassword: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            dateBirth: vm.formatDate(new Date().toISOString().substr(0, 10)),
+            date: new Date().toISOString().substr(0, 10),
+            login: '',
+            password: '',
+            confirmPassword: '',
 
+            confirmPasswordMessage: '',
 
-    freeUserNameMessage: '',
-    confirmPasswordMessage: '',
+            userDTO: {},
 
-    userDTO: {},
+            eFirstName: '',
+            eLastName: '',
+            eEmail: '',
+            eDateBirth: '',
+            eLogin: '',
+            ePassword: '',
+            eConfirmPassword: '',
 
-    allUsers: [],
+            url: {
+                saveUser: 'http://localhost:8090/api/v1/users',
+                validLogin: 'http://localhost:8090/api/v1/users/valid-login',
+            },
+        }),
+        watch: {
 
-    url: {
-      // allUser: 'http://localhost:8090/api/v1/users',
-      saveUser: 'http://localhost:8090/api/v1/users',
-    },
-  }),
-  // watch: {
-    // firstName() {
-    //   this.userDTO.firstName = this.firstName
-    // },
-    // lastName() {
-    //   this.userDTO.lastName = this.lastName
-    // },
-    // dateBirth() {
-    //   this.userDTO.dateBirth = this.dateBirth
-    // },
-    // date() {
-    //   this.dateBirth = this.formatDate(this.date)
-    // },
-    // dialog() {
-    //   this.login = '';
-    //   this.freeUserNameMessage = '';
-    //   this.freeUserNameStatus = true;
-    //   this.confirmPassword = '';
-    //   this.confirmPasswordStatus = false;
-    //   this.confirmPasswordMessage = '';
-    //   this.userDTO = {}
-    //   this.userDTO.password = '';
-    //   this.firstName = '';
-    //   this.lastName = '';
-    // },
-    // freeUserName: function () {
-    //   this.check = true;
-    //   this.allUsers.forEach(user => {
-    //     if (this.check) {
-    //       if (this.login !== '') {
-    //         if (this.login !== user.username) {
-    //           this.freeUserNameMessage = 'Login "' + this.login + '" is free';
-    //           this.userDTO.username = this.login;
-    //           this.freeUserNameStatus = true;
-    //         } else {
-    //           this.freeUserNameMessage = 'Login "' + this.userDTO.username + '" is used';
-    //           this.freeUserNameStatus = false;
-    //           this.check = false;
-    //         }
-    //       } else {
-    //         this.freeUserNameMessage = 'Please enter your login';
-    //         this.freeUserNameStatus = false;
-    //       }
-    //     }
-    //   })
-    // },
-    // confirmPassword: function () {
-    //   if ((this.confirmPassword !== this.userDTO.password) || (this.login === '')) {
-    //     this.confirmPasswordMessage = "Passwords don't match";
-    //     this.confirmPasswordStatus = false;
-    //   } else {
-    //     this.confirmPasswordMessage = "";
-    //     this.confirmPasswordStatus = true;
-    //   }
-    // },
-  // },
-  // created() {
-  //   this.getAllUser();
-  // },
-  methods: {
-
-    formatDate(date) {
-      if (!date) return null
-      const [year, month, day] = date.split('-')
-      return `${year}-${month}-${day}`
-    },
-    // getAllUser() {
-    //   this.axios.get(this.url.allUser)
-    //       .then(response => this.allUsers = response.data);
-    // },
-    buildUser(){
-      this.userDTO.login = this.login;
-      this.userDTO.password = this.password;
-      this.userDTO.email = this.email;
-      this.userDTO.lastName = this.lastName;
-      this.userDTO.firstName = this.firstName;
-      },
-    saveUser() {
-      this.buildUser();
-      this.axios.post(this.url.saveUser, this.userDTO)
-          .then(response => {
-            console.log(this.userDTO);
-            this.$emit('user', response.data);
-            this.dialog = false;
-          })
+            dialog() {
+                this.login = '';
+                this.confirmPassword = '';
+                this.confirmPasswordStatus = false;
+                this.confirmPasswordMessage = '';
+                this.userDTO = {}
+                this.password = '';
+                this.firstName = '';
+                this.lastName = '';
+                this.email = '';
+            },
+        },
+        methods: {
+            clear() {
+                this.eFirstName = '';
+                this.eLastName = '';
+                this.eEmail = '';
+                this.eDateBirth = '';
+                this.eLogin = '';
+                this.ePassword = '';
+                this.eConfirmPassword = '';
+            },
+            formatDate(date) {
+                if (!date) return null
+                const [year, month, day] = date.split('-')
+                return `${year}-${month}-${day}`
+            },
+            validFirstName() {
+                if (!this.firstName) {
+                    this.check = false;
+                    return 'Please enter your first name';
+                }
+                if (this.firstName.split('').length > 50) {
+                    this.check = false;
+                    return 'First name must be less than 50 characters'
+                }
+                if (this.firstName.split('').length < 2) {
+                    console.log('this.firstName.split().length = ', this.firstName.split().length);
+                    this.check = false;
+                    return 'First name must be more than 2 characters'
+                }
+                return '';
+            },
+            validLastName() {
+                if (!this.lastName) {
+                    this.check = false;
+                    return 'Please enter your first name'
+                }
+                if (this.lastName.split('').length > 50) {
+                    this.check = false;
+                    return 'Last name must be less than 50 characters'
+                }
+                if (this.lastName.split('').length < 2) {
+                    this.check = false;
+                    return 'Last name must be more than 2 characters'
+                }
+            },
+            validEmail() {
+                if (!this.email) {
+                    this.check = false;
+                    return 'Please enter your email'
+                }
+                const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                if (re.test(this.email)) {
+                    this.check = false;
+                    return 'Please enter correct email';
+                }
+            },
+            validPassword() {
+                if (!this.password) {
+                    this.check = false;
+                    return 'Please enter your password'
+                }
+                if (this.password.split('').length > 100) {
+                    this.check = false;
+                    return 'Password must be less than 100 characters'
+                }
+                if (this.password.split('').length < 3) {
+                    this.check = false;
+                    return 'Password must be more than 3 characters'
+                }
+            },
+            validLogin() {
+                this.axios.get(this.url.validLogin, {params: {login: this.login}})
+                    .then(response => {
+                        console.log(response.data);
+                        if (response.data !== "") {
+                            this.check = false;
+                        }
+                        this.eLogin = response.data;
+                        return response.data;
+                    })
+            },
+            validation() {
+                this.eFirstName = this.validFirstName();
+                this.eLastName = this.validLastName();
+                this.eEmail = this.validEmail();
+                this.ePassword = this.validPassword();
+                this.eLogin = this.validLogin();
+            },
+            buildUser() {
+                this.userDTO.login = this.login;
+                this.userDTO.password = this.password;
+                this.userDTO.email = this.email;
+                this.userDTO.lastName = this.lastName;
+                this.userDTO.firstName = this.firstName;
+            },
+            saveUser() {
+                this.clear();
+                this.validation();
+                if (this.check) {
+                    this.check = true;
+                    this.buildUser();
+                    this.axios.post(this.url.saveUser, this.userDTO)
+                        .then(response => {
+                            console.log(response);
+                            this.$emit('user', response.data);
+                            this.dialog = false;
+                        })
+                } else this.check = true;
+            }
+        }
     }
-  }
-}
 </script>
