@@ -55,7 +55,6 @@ export default {
             this.scheduleStation1 = [];
             this.scheduleStation.forEach(schedul => {
               schedul.arrival = moment(schedul.arrival).format('L');
-              console.log(schedul.arrival);
               this.scheduleStation1.push(schedul);
               this.fl = true;
             });

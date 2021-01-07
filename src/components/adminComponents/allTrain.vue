@@ -6,7 +6,7 @@
       <v-row justify="center">
         <v-data-table
             :headers="headers"
-            :items="allTrains"
+            :items="trains"
             item-key="name"
             class="elevation-1">
         </v-data-table>
@@ -23,16 +23,15 @@ export default {
       {text: 'Train №', value: 'number'},
       {text: 'Capacity', value: 'capacity'}
     ],
-    allTrains: [],
+    trains: [],
     url: {
-      alltrains: 'http://localhost:8090/api/v1/trains',
+      getTrains: 'http://localhost:8090/api/v1/trains',
     },
   }),
   created() {
-    this.axios.get(this.url.alltrains)
+    this.axios.get(this.url.getTrains)
         .then(response => {
-          console.log(response.data);
-          this.allTrains = response.data;
+          this.trains = response.data;
         })
   }
 }

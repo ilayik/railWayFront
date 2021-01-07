@@ -3,15 +3,15 @@
     <v-col cols="12" sm="12" md="12">
       <v-data-table
           :headers="headers"
-          :items="allTrains"
-          sort-by="arrivel"
+          :items="schedules"
+          sort-by="arrival"
           class="elevation-1"
       >
         <template v-slot:top>
           <v-toolbar
               flat
           >
-            <v-toolbar-title>Scheduls in {{ stationname }} station</v-toolbar-title>
+            <v-toolbar-title>Schedules in {{stationname}} station</v-toolbar-title>
             <v-divider
                 class="mx-4"
                 inset
@@ -35,14 +35,14 @@
               </template>
               <v-card>
                 <v-card-title>
-                  <span class="headline">{{ formTitle }}</span>
+                  <span class="headline"> {{formTitle}} </span>
                 </v-card-title>
 
                 <v-card-text>
                   <v-container>
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.name" label="Train number"></v-text-field>
+                        <v-text-field v-model="editedItem.trainNumber" label="Train number"></v-text-field>
                       </v-col>
                       <v-col class="d-flex" cols="12" sm="6">
                         <v-menu
@@ -55,8 +55,8 @@
                         >
                           <template v-slot:activator="{ on, attrs }">
                             <v-text-field
-                                v-model="dateBirth"
-                                label="Arrivel"
+                                v-model="dateFormat"
+                                label="Arrival"
                                 readonly
                                 v-bind="attrs"
                                 v-on="on"
@@ -116,41 +116,44 @@
             mdi-delete
           </v-icon>
         </template>
-        <template v-slot:no-data>
-          <v-btn
-              color="primary"
-              @click="initialize"
-          >
-            Reset
-          </v-btn>
-        </template>
+
       </v-data-table>
+      <template v-if="schedules.length !== 0">
+        <v-btn
+                color="primary"
+                @click="saveSchedules"
+        >
+          save schedules
+        </v-btn>
+      </template>
     </v-col>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['stationname'],
+  props: { stationname: String },
   data: vm => ({
     date: new Date().toISOString().substr(0, 10),
-    dateBirth: vm.formatDate(new Date().toISOString().substr(0, 10)),
+    dateFormat: vm.formatDate(new Date().toISOString().substr(0, 10)),
     dialog: false,
     dialogDelete: false,
+    menu1: false,
     headers: [
-      {
-        text: 'Train number',
-        align: 'start',
-        sortable: false,
-        value: 'number',
-      },
-      {text: 'Arrivel', value: 'arrivel'},
+      {text: 'Train number',value: 'number'},
+      {text: 'Arrival', value: 'arrival'},
+      {text: 'Actions', value: 'actions', sortable: false },
     ],
-    allTrains: [],
     editedIndex: -1,
+    defaultItem:{
+      trainNumber: '',
+      arrival: '',
+      stationName: '',
+    },
     editedItem: {
-      name: '',
-      calories: 0,
+      trainNumber: '',
+      arrival: '',
+      stationName: '',
     },
     check: true,
     stationNameMessage: '',
@@ -158,9 +161,10 @@ export default {
     station: {
       name: '',
     },
-    AllStation: [],
+    schedules: [],
     url: {
       allStation: 'http://localhost:8090/api/v1/stations',
+      saveSchedules: 'http://localhost:8090/api/v1/schedules/add-in-station',
     }
   }),
   computed: {
@@ -169,36 +173,40 @@ export default {
     },
   },
   created() {
+    console.log('stationname  ' + this.stationname);
     this.getAllTrains();
-    this.initialize()
   },
 
   methods: {
     getAllTrains() {
-      this.axios.get(this.url.allStation)
-          .then(response => {
-            this.AllStation = response.data;
-            console.log(this.AllStation)
-          })
+      // this.axios.get(this.url.alltrains)
+      //     .then(response => {
+      //       this.allTrains = response.data;
+      //       console.log(this.allTrains)
+      //     })
     },
-    initialize() {
-      this.desserts = []
+    saveSchedules() {
+      console.log(this.schedules)
+      this.axios.post(this.url.saveSchedules, this.schedules)
+              .then(response => {
+                console.log(response)
+              })
     },
 
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.schedules.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
     deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.schedules.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
 
     deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1)
+      this.schedules.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
@@ -220,14 +228,29 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+
+        this.editedItem.stationName = this.stationname;
+        console.log(this.editedItem);
+        Object.assign(this.schedules[this.editedIndex], this.editedItem)
       } else {
-        this.desserts.push(this.editedItem)
+        this.editedItem.stationName = this.stationname;
+        console.log(this.editedItem);
+        this.schedules.push(this.editedItem)
       }
+      console.log('log save')
       this.close()
+    },
+    formatDate(date) {
+      if (!date) return null
+      const [year, month, day] = date.split('-')
+      return `${year}-${month}-${day}`
     },
   },
   watch: {
+    date () {
+      this.dateFormat = this.formatDate(this.date);
+      this.editedItem.arrival = this.dateFormat;
+    },
     dialog(val) {
       val || this.close()
     },

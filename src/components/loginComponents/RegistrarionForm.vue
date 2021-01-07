@@ -177,9 +177,8 @@
             formatDate(date) {
                 if (!date) return null
                 const [year, month, day] = date.split('-')
-                return `${year}-${month}-${day}`
-            }
-            ,
+                return `${day}.${month}.${year}`
+            },
             validFirstName() {
                 if (!this.firstName) {
                     this.check = false;

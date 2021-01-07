@@ -33,7 +33,6 @@ export default {
     sessionUsers: {},
     nameUser: '',
     url: {
-      getLastUser: 'http://localhost:8090/api/v1/users/get-last',
       getNameUser: 'http://localhost:8090/api/v1/users/get-name',
     }
   }),

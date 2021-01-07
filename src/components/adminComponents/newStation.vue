@@ -45,20 +45,19 @@ export default {
     }
   }),
   created() {
-    this.getAllStation();
+    this.getAllStations();
   },
 
   methods: {
     saveStation() {
       this.newSchedulesStatus = true;
       this.axios.post(this.url.saveStation, this.station)
-          .then(
-              response => {
+          .then(response => {
+            console.log(response.data)
                 this.stationCreateMassage = 'Station ' + response.data.name + ' saved, please, add schedules';
-              }
-          )
+              })
     },
-    getAllStation() {
+    getAllStations() {
       this.axios.get(this.url.allStation)
           .then(response => {
             this.AllStation = response.data;
